@@ -1,0 +1,148 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        // Semantic design tokens — maps to CSS custom properties
+        surface: {
+          DEFAULT: 'var(--color-surface)',
+          secondary: 'var(--color-surface-secondary)',
+          tertiary: 'var(--color-surface-tertiary)',
+          elevated: 'var(--color-surface-elevated)',
+          invert: 'var(--color-surface-invert)',
+        },
+        border: {
+          DEFAULT: 'var(--color-border)',
+          secondary: 'var(--color-border-secondary)',
+        },
+        content: {
+          DEFAULT: 'var(--color-content)',
+          secondary: 'var(--color-content-secondary)',
+          tertiary: 'var(--color-content-tertiary)',
+          invert: 'var(--color-content-invert)',
+        },
+        // Brand / Accent
+        primary: {
+          DEFAULT: '#0EA5E9',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0EA5E9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
+        },
+        success: {
+          DEFAULT: '#22C55E',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          400: '#4ade80',
+          500: '#22C55E',
+          600: '#16a34a',
+          700: '#15803d',
+          900: '#14532d',
+          950: '#052e16',
+        },
+        danger: {
+          DEFAULT: '#EF4444',
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          400: '#f87171',
+          500: '#EF4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          900: '#7f1d1d',
+          950: '#450a0a',
+        },
+        warning: {
+          DEFAULT: '#F59E0B',
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          400: '#fbbf24',
+          500: '#F59E0B',
+          600: '#d97706',
+          700: '#b45309',
+          900: '#78350f',
+          950: '#451a03',
+        },
+        // Legacy compatibility aliases
+        background: 'var(--color-surface)',
+        card: 'var(--color-surface-secondary)',
+        hover: 'var(--color-surface-tertiary)',
+        muted: 'var(--color-content-tertiary)',
+        darkBackground: '#0A0A0A',
+        darkCard: '#1F1F1F',
+        darkBorder: '#2D2D2D',
+        accentGreen: '#22C55E',
+        accentSky: '#0EA5E9',
+        accentWarning: '#F59E0B',
+        accentDanger: '#EF4444',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+      },
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.25rem',
+      },
+      boxShadow: {
+        'subtle': '0 1px 2px 0 rgba(0,0,0,0.05)',
+        'elevated': '0 4px 20px -2px rgba(0,0,0,0.08), 0 2px 6px -1px rgba(0,0,0,0.04)',
+        'glow-primary': '0 0 20px -5px rgba(14,165,233,0.3)',
+        'glow-success': '0 0 20px -5px rgba(34,197,94,0.3)',
+        'glow-danger': '0 0 20px -5px rgba(239,68,68,0.3)',
+      },
+      spacing: {
+        'sidebar': '16rem',
+        'sidebar-collapsed': '4.5rem',
+        'topbar': '4rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 200ms ease-out',
+        'slide-up': 'slideUp 200ms ease-out',
+        'slide-down': 'slideDown 200ms ease-out',
+        'scale-in': 'scaleIn 150ms ease-out',
+        'shimmer': 'shimmer 2s infinite linear',
+        'blob': 'blob 7s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        blob: {
+          '0%': { transform: 'translate(0,0) scale(1)' },
+          '33%': { transform: 'translate(30px,-50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px,20px) scale(0.9)' },
+          '100%': { transform: 'translate(0,0) scale(1)' },
+        },
+      },
+    },
+  },
+  plugins: [],
+};

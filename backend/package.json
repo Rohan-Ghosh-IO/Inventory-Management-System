@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend services for Inventory Management System",
+  "scripts": {
+    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "prisma:seed": "ts-node ./prisma/seed.ts",
+    "build": "npm run build --workspaces"
+  }
+}
