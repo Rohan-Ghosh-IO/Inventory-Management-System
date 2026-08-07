@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Supplier, PaginationMeta } from '../../types';
 import { supplierApi, GetSuppliersQueryParams, SupplierPayload } from '../../services/supplier.api';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface SupplierState {
   items: Supplier[];
@@ -33,7 +34,7 @@ export const fetchSuppliers = createAsyncThunk(
         meta: response.meta || { page: 1, limit: 10, total: 0, totalPages: 1 },
       };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch suppliers');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to load suppliers.'));
     }
   }
 );
@@ -45,7 +46,7 @@ export const createSupplier = createAsyncThunk(
       const response = await supplierApi.createSupplier(payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to create supplier');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to save supplier.'));
     }
   }
 );
@@ -57,7 +58,7 @@ export const updateSupplier = createAsyncThunk(
       const response = await supplierApi.updateSupplier(id, payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to update supplier');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to update supplier.'));
     }
   }
 );
@@ -69,7 +70,7 @@ export const deleteSupplier = createAsyncThunk(
       await supplierApi.deleteSupplier(id);
       return id;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to delete supplier');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to delete supplier.'));
     }
   }
 );

@@ -6,6 +6,7 @@ import {
   StockMovementPayload,
   StockMovementResponseData,
 } from '../../services/transaction.api';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface TransactionState {
   items: InventoryTransaction[];
@@ -38,7 +39,7 @@ export const fetchTransactions = createAsyncThunk(
         meta: response.meta || { page: 1, limit: 10, total: 0, totalPages: 1 },
       };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch transactions');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to load transaction records.'));
     }
   }
 );
@@ -50,7 +51,7 @@ export const performStockIn = createAsyncThunk(
       const response = await transactionApi.stockIn(payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to add stock');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to process stock inward movement.'));
     }
   }
 );
@@ -62,7 +63,7 @@ export const performStockOut = createAsyncThunk(
       const response = await transactionApi.stockOut(payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to issue stock');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to process stock outward movement.'));
     }
   }
 );

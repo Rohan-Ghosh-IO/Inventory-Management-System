@@ -7,6 +7,7 @@ import {
   CategoryValueData,
 } from '../../services/dashboard.api';
 import { InventoryTransaction, Product } from '../../types';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface DashboardState {
   summary: DashboardSummaryData | null;
@@ -53,7 +54,7 @@ export const fetchDashboardData = createAsyncThunk(
         lowStockProducts: lowStockRes.data || [],
       };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to load dashboard metrics');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to load dashboard metrics.'));
     }
   }
 );

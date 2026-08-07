@@ -46,12 +46,24 @@ const setupInterceptors = (instance: typeof axios) => {
         } catch (_) {}
       }
 
+      const requestUrl = error.config?.url || '';
+      const isAuthEndpoint =
+        requestUrl.includes('/login') ||
+        requestUrl.includes('/register') ||
+        requestUrl.includes('/signup') ||
+        requestUrl.includes('/verify-otp') ||
+        requestUrl.includes('/refresh-token') ||
+        requestUrl.includes('/refresh');
+
       if (error.response?.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        toast.error('Session expired. Please log in again.');
-        if (window.location.pathname !== ROUTES.LOGIN) {
-          window.location.href = ROUTES.LOGIN;
+        // Exclude auth endpoints (login, register) from trigger of "Session expired" toast & forced logout
+        if (!isAuthEndpoint) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          toast.error('Session expired. Please log in again.');
+          if (window.location.pathname !== ROUTES.LOGIN) {
+            window.location.href = ROUTES.LOGIN;
+          }
         }
       } else if (!error.response) {
         toast.error('Network connection error. Server unreachable.');

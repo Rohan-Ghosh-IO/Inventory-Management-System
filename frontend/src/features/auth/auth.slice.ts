@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types';
 import { authApi, LoginPayload, RegisterPayload } from '../../services/auth.api';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface AuthState {
   user: User | null;
@@ -31,9 +32,9 @@ export const loginUser = createAsyncThunk(
         localStorage.setItem('user', JSON.stringify(response.data.user));
         return response.data;
       }
-      return rejectWithValue(response.message || 'Login failed');
+      return rejectWithValue(response.message || 'Invalid email or password.');
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Invalid email or password');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Invalid email or password.'));
     }
   }
 );
@@ -47,9 +48,9 @@ export const fetchCurrentUser = createAsyncThunk(
         localStorage.setItem('user', JSON.stringify(response.data));
         return response.data;
       }
-      return rejectWithValue(response.message || 'Failed to fetch user');
+      return rejectWithValue(response.message || 'Failed to fetch user profile.');
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Authentication session invalid');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Authentication session invalid.'));
     }
   }
 );
@@ -62,9 +63,9 @@ export const registerUser = createAsyncThunk(
       if (response.success) {
         return response.data;
       }
-      return rejectWithValue(response.message || 'Registration failed');
+      return rejectWithValue(response.message || 'Registration failed.');
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Registration failed');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Registration failed. Please check your details.'));
     }
   }
 );

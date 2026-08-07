@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Category, PaginationMeta } from '../../types';
 import { categoryApi, GetCategoriesQueryParams, CategoryPayload } from '../../services/category.api';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface CategoryState {
   items: Category[];
@@ -33,7 +34,7 @@ export const fetchCategories = createAsyncThunk(
         meta: response.meta || { page: 1, limit: 10, total: 0, totalPages: 1 },
       };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch categories');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to load categories.'));
     }
   }
 );
@@ -45,7 +46,7 @@ export const createCategory = createAsyncThunk(
       const response = await categoryApi.createCategory(payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to create category');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to save category.'));
     }
   }
 );
@@ -57,7 +58,7 @@ export const updateCategory = createAsyncThunk(
       const response = await categoryApi.updateCategory(id, payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to update category');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to update category.'));
     }
   }
 );
@@ -69,7 +70,7 @@ export const deleteCategory = createAsyncThunk(
       await categoryApi.deleteCategory(id);
       return id;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to delete category');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to delete category.'));
     }
   }
 );

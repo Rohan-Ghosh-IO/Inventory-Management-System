@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Product, PaginationMeta } from '../../types';
 import { productApi, GetProductsQueryParams, ProductPayload } from '../../services/product.api';
+import { sanitizeErrorMessage } from '../../utils/error.util';
 
 interface ProductState {
   items: Product[];
@@ -33,7 +34,7 @@ export const fetchProducts = createAsyncThunk(
         meta: response.meta || { page: 1, limit: 10, total: 0, totalPages: 1 },
       };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch products');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to load products.'));
     }
   }
 );
@@ -45,7 +46,7 @@ export const createProduct = createAsyncThunk(
       const response = await productApi.createProduct(payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to create product');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to save product.'));
     }
   }
 );
@@ -57,7 +58,7 @@ export const updateProduct = createAsyncThunk(
       const response = await productApi.updateProduct(id, payload);
       return response.data!;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to update product');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to update product.'));
     }
   }
 );
@@ -69,7 +70,7 @@ export const deleteProduct = createAsyncThunk(
       await productApi.deleteProduct(id);
       return id;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to delete product');
+      return rejectWithValue(sanitizeErrorMessage(err, 'Unable to delete product.'));
     }
   }
 );
