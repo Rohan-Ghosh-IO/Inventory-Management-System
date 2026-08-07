@@ -292,3 +292,16 @@ inventory-management-system
 - Open the frontend
 - Explore APIs using Swagger
 - View the database schema using the DB Diagram
+
+
+
+
+## Assumptions & Trade-offs
+
+- JWT-based stateless authentication is used instead of server-side sessions for simplicity and scalability.
+- Product stock status (In Stock, Low Stock, Out of Stock) is calculated dynamically from quantity and low-stock threshold instead of being stored in the database.
+- Product deletion uses soft delete to preserve inventory history and prevent accidental data loss.
+- Cloudinary is used for storing product images instead of the local filesystem.
+- The application is designed for a single inventory location and does not support multi-warehouse inventory management.
+- Inventory transactions prevent negative stock quantities through backend validation.
+- Optional bonus features such as CSV import and automated unit/integration tests were not implemented due to the assignment timeline.
